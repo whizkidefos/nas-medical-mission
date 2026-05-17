@@ -152,10 +152,10 @@
     </ul>
 
     <div class="mobile-nav__cta">
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn-outline" style="flex:1; justify-content:center;">
+        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="btn btn-outline mobile-nav__cta-btn" style="flex:1; justify-content:center;">
             <i class="fas fa-hands-helping"></i> <?php esc_html_e( 'Volunteer', 'nas-medical-mission' ); ?>
         </a>
-        <a href="<?php echo esc_url( home_url( '/support/' ) ); ?>" class="btn btn-primary" style="flex:1; justify-content:center;">
+        <a href="<?php echo esc_url( home_url( '/support/' ) ); ?>" class="btn btn-primary mobile-nav__cta-btn" style="flex:1; justify-content:center;">
             <i class="fas fa-heart"></i> <?php esc_html_e( 'Donate', 'nas-medical-mission' ); ?>
         </a>
     </div>

@@ -1576,3 +1576,156 @@ function nmm_maybe_set_blog_page(): void {
     }
 }
 add_action( 'init', 'nmm_maybe_set_blog_page', 20 );
+
+/* ============================================================
+   14. BRANDED LOGIN PAGE
+   ============================================================ */
+
+/**
+ * Build a logo URL for the login page.
+ * Prioritizes the Custom Logo, then falls back to /images/logo.png.
+ */
+function nmm_login_logo_url(): string {
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( $custom_logo_id ) {
+        $custom_logo = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+        if ( ! empty( $custom_logo[0] ) ) {
+            return esc_url_raw( $custom_logo[0] );
+        }
+    }
+
+    return esc_url_raw( get_template_directory_uri() . '/images/logo.png' );
+}
+
+/**
+ * Replace default wp-login.php styling with NAS theme branding.
+ */
+function nmm_brand_login_page(): void {
+    $logo_url = nmm_login_logo_url();
+    ?>
+    <style id="nmm-login-branding">
+        body.login {
+            font-family: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(232, 197, 71, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 10%, rgba(110, 55, 139, 0.20), transparent 30%),
+                linear-gradient(135deg, #f7f8fc 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        body.login #login {
+            width: min(430px, calc(100% - 2rem));
+            padding: 4.2rem 0 1.5rem;
+        }
+
+        body.login h1 a {
+            background-image: url('<?php echo esc_url( $logo_url ); ?>');
+            background-size: contain;
+            background-position: center;
+            width: 100%;
+            height: 78px;
+            margin: 0 auto 1.15rem;
+        }
+
+        body.login #loginform,
+        body.login #lostpasswordform,
+        body.login #registerform,
+        body.login #resetpassform {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            box-shadow: 0 20px 48px rgba(26, 26, 46, 0.10);
+            padding: 1.55rem;
+        }
+
+        body.login label {
+            color: #2d3748;
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        body.login form .input,
+        body.login input[type="text"],
+        body.login input[type="password"] {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            min-height: 44px;
+            box-shadow: none;
+            padding: 0.65rem 0.78rem;
+        }
+
+        body.login form .input:focus,
+        body.login input[type="text"]:focus,
+        body.login input[type="password"]:focus {
+            border-color: #6E378B;
+            box-shadow: 0 0 0 3px rgba(110, 55, 139, 0.15);
+        }
+
+        body.login .button-primary {
+            border: 0;
+            border-radius: 10px;
+            background: #6E378B;
+            min-height: 42px;
+            padding: 0.2rem 1.1rem;
+            font-weight: 700;
+            text-shadow: none;
+            box-shadow: 0 10px 24px rgba(110, 55, 139, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        body.login .button-primary:hover,
+        body.login .button-primary:focus {
+            background: #4D2065;
+            transform: translateY(-1px);
+            box-shadow: 0 14px 28px rgba(77, 32, 101, 0.25);
+        }
+
+        body.login .forgetmenot label {
+            font-size: 0.82rem;
+            color: #718096;
+        }
+
+        body.login #backtoblog,
+        body.login #nav {
+            text-align: center;
+            font-size: 0.84rem;
+        }
+
+        body.login #backtoblog a,
+        body.login #nav a {
+            color: #6E378B;
+            font-weight: 600;
+        }
+
+        body.login #backtoblog a:hover,
+        body.login #nav a:hover {
+            color: #4D2065;
+        }
+
+        body.login .message,
+        body.login .notice,
+        body.login #login_error {
+            border-radius: 10px;
+            border-left-width: 4px;
+            box-shadow: none;
+        }
+    </style>
+    <?php
+}
+add_action( 'login_enqueue_scripts', 'nmm_brand_login_page' );
+
+/**
+ * Login logo click should return to the site homepage.
+ */
+function nmm_login_header_url(): string {
+    return home_url( '/' );
+}
+add_filter( 'login_headerurl', 'nmm_login_header_url' );
+
+/**
+ * Login logo title text.
+ */
+function nmm_login_header_title(): string {
+    return get_bloginfo( 'name' );
+}
+add_filter( 'login_headertext', 'nmm_login_header_title' );

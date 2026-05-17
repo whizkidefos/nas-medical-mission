@@ -31,12 +31,12 @@
 
 <section class="section">
     <div class="container">
-        <div style="display:grid; grid-template-columns: 1fr 300px; gap:3rem; align-items:start;">
+        <div class="blog-archive__layout">
 
             <!-- Posts -->
-            <main role="main">
+            <main role="main" class="blog-archive__main">
                 <?php if ( have_posts() ) : ?>
-                    <div class="blog__grid" style="grid-template-columns:1fr 1fr;">
+                    <div class="blog__grid blog-archive__grid">
                         <?php while ( have_posts() ) : the_post(); ?>
                             <?php
                             $img_url = nmm_get_post_thumbnail_url( get_the_ID(), 'nmm-card' );
@@ -66,7 +66,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div style="margin-top:3rem; display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap;">
+                    <div class="blog-archive__pagination">
                         <?php
                         the_posts_pagination( [
                             'mid_size'  => 2,
@@ -89,24 +89,24 @@
             </main>
 
             <!-- Sidebar -->
-            <aside role="complementary">
+            <aside role="complementary" class="blog-archive__sidebar">
                 <?php if ( is_active_sidebar( 'sidebar-blog' ) ) : ?>
                     <?php dynamic_sidebar( 'sidebar-blog' ); ?>
                 <?php else : ?>
                     <!-- Default sidebar content -->
-                    <div style="background:var(--color-surface); border-radius:var(--radius-lg); padding:2rem; margin-bottom:2rem;">
-                        <h4 style="margin-bottom:1rem; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--color-muted);"><?php esc_html_e( 'About NMM', 'nas-medical-mission' ); ?></h4>
-                        <p style="font-size:0.9rem;"><?php esc_html_e( 'NAS Medical Mission delivers free healthcare to underserved communities across Nigeria — quarterly, consistently, compassionately.', 'nas-medical-mission' ); ?></p>
-                        <a href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>" class="btn btn-outline" style="margin-top:1rem; font-size:0.85rem; padding:0.6rem 1.25rem;">
+                    <div class="blog-sidebar-card blog-sidebar-card--surface">
+                        <h4 class="blog-sidebar-card__title"><?php esc_html_e( 'About NMM', 'nas-medical-mission' ); ?></h4>
+                        <p><?php esc_html_e( 'NAS Medical Mission delivers free healthcare to underserved communities across Nigeria — quarterly, consistently, compassionately.', 'nas-medical-mission' ); ?></p>
+                        <a href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>" class="btn btn-outline blog-sidebar-card__btn">
                             <?php esc_html_e( 'Learn More', 'nas-medical-mission' ); ?>
                         </a>
                     </div>
 
-                    <div style="background:var(--color-primary); border-radius:var(--radius-lg); padding:2rem; color:white; text-align:center; margin-bottom:2rem;">
-                        <i class="fas fa-heart" style="font-size:2rem; color:var(--color-accent); margin-bottom:1rem; display:block;"></i>
-                        <h4 style="color:white; margin-bottom:0.5rem;"><?php esc_html_e( 'Support a Mission', 'nas-medical-mission' ); ?></h4>
-                        <p style="color:rgba(255,255,255,0.8); font-size:0.88rem; margin-bottom:1.25rem;"><?php esc_html_e( 'Your donation helps us reach more communities in need.', 'nas-medical-mission' ); ?></p>
-                        <a href="<?php echo esc_url( home_url( '/support/' ) ); ?>" class="btn btn-accent" style="font-size:0.85rem; padding:0.6rem 1.5rem;">
+                    <div class="blog-sidebar-card blog-sidebar-card--primary">
+                        <i class="fas fa-heart blog-sidebar-card__icon" aria-hidden="true"></i>
+                        <h4 class="blog-sidebar-card__title"><?php esc_html_e( 'Support a Mission', 'nas-medical-mission' ); ?></h4>
+                        <p><?php esc_html_e( 'Your donation helps us reach more communities in need.', 'nas-medical-mission' ); ?></p>
+                        <a href="<?php echo esc_url( home_url( '/support/' ) ); ?>" class="btn btn-accent blog-sidebar-card__btn">
                             <?php esc_html_e( 'Donate Now', 'nas-medical-mission' ); ?>
                         </a>
                     </div>

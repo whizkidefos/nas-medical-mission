@@ -63,7 +63,7 @@ get_header();
             <h2 class="section-title"><?php esc_html_e( 'How to Get Involved', 'nas-medical-mission' ); ?></h2>
         </div>
 
-        <div class="pillars__grid">
+        <div class="pillars__grid volunteer-steps-grid">
             <?php
             $steps = [
                 [ '01', 'fas fa-file-alt',    'Apply Below',          'Fill out the volunteer application form below. Tell us about your profession, skills, and availability for quarterly missions.' ],
